@@ -24,27 +24,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(startActivity);
                 finish();
             }
-        }, 3000);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if(item.getItemId()==R.id.add){
-            //Intent to Activity to create a note
-            return true;
-        }
-        else if(item.getItemId()==R.id.filter){
-            //open that side thingy
-            return true;
-        }
-
-        return true;
+        }, 1000);
     }
 }

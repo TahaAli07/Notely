@@ -12,14 +12,14 @@ public class Helper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version
     private static final int DATABASE_VERSION = 1;
 
-    public Helper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public Helper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String str = "CREATE TABLE NOTELY(ID INT ,TEXT TITLE , TEXT DESCRIPTION , TEXT TIME )";
+        String str = "CREATE TABLE NOTELY(ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT ,  DESCRIPTION TEXT, TIME LONG )";
 
         db.execSQL(str);
 
