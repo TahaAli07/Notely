@@ -48,7 +48,7 @@ public class CreateNote extends AppCompatActivity {
             String title = mTitle.getText().toString();
             String description = mDescription.getText().toString();
 
-            if(title!="" && description!=""){
+            if(title.equals("") && description.equals("")){
                 addTodb(title,description);
 
                 mTitle.clearFocus();

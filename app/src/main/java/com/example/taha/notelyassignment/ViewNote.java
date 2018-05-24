@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+//Class to View/Edit a Note
 public class ViewNote extends AppCompatActivity {
 
     private SQLiteDatabase mDb;
@@ -63,17 +64,14 @@ public class ViewNote extends AppCompatActivity {
             cv.put("DESCRIPTION",mDescription.getText().toString());
             mDb.update("NOTELY",cv,"ID = "+ID,null);
 
+            Intent intent = new Intent(ViewNote.this,ListActivity.class);
+            startActivity(intent);
+
             mTitle.clearFocus();
             mDescription.clearFocus();
             mTitle.getText().clear();
             mDescription.getText().clear();
-
-            Intent intent = new Intent(ViewNote.this,ListActivity.class);
-            startActivity(intent);
-
         }
-
         return true;
     }
-
 }

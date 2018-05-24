@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
+//This is the splash screen
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -24,6 +23,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(startActivity);
                 finish();
             }
-        }, 1000);
+        }, 3000);
     }
 }

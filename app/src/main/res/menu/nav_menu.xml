@@ -4,10 +4,14 @@
 
     <item android:id="@+id/Hearted"
         android:title="Hearted"
-        app:actionLayout="@layout/widget_check"/>
+        android:checkable="true"
+        app:actionLayout="@layout/widget_check"
+        />
 
     <item android:id="@+id/Favourite"
         android:title="Favourite"
-        app:actionLayout="@layout/widget_check_favourite"/>
+        android:checkable="true"
+        app:actionLayout="@layout/widget_check_favourite"
+        />
 
 </menu>

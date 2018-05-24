@@ -5,5 +5,5 @@
     android:layout_height="wrap_content"
     android:checked="false"
     android:id="@+id/sort_favourite_checkbox"
-
+    android:text=""
     />
