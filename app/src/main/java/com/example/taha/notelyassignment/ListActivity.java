@@ -16,8 +16,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.facebook.stetho.Stetho;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -79,13 +77,6 @@ public class ListActivity extends AppCompatActivity {
 
         cursor.close();
 
-        /*headings = new String[]{"Note 1 heading ", "Note 2 heading" , "Note 3 heading" , "Note 4 heading" ,
-                "Note 5 heading" , "Note 6 heading" , "Note 7 heading" , "Note 8 heading"};
-        descriptions = new String[]{"Note 1 description ", "Note 2 description" , "Note 3 description" , "Note 4 description" ,
-                "Note 5 description" , "Note 6 description" , "Note 7 description" , "Note 8 description"};
-        times = new String[]{" 1 time ", " 2 time" , " 3 time" , " 4 time" ,
-                " 5 time" , " 6 time" , " 7 time" , " 8 time"};*/
-
         customAdapter customAdapter= new customAdapter();
         mListView.setAdapter(customAdapter);
 
@@ -101,8 +92,6 @@ public class ListActivity extends AppCompatActivity {
                 String desc = description.getText().toString();
                 String t = time.getText().toString();
 
-                Toast.makeText(ListActivity.this, title+desc+t, Toast.LENGTH_SHORT).show();
-
                 Cursor cursor1 = mDb.rawQuery("SELECT ID FROM NOTELY WHERE TITLE=? AND DESCRIPTION = ? ", new String[]{title, desc});
                 Integer ID=0;
 
@@ -114,9 +103,8 @@ public class ListActivity extends AppCompatActivity {
                 cursor1.close();
                 Intent viewNoteIntent = new Intent(ListActivity.this,ViewNote.class);
                 viewNoteIntent.putExtra("ID",ID);
-                Toast.makeText(ListActivity.this, String.valueOf(ID), Toast.LENGTH_SHORT).show();
+                viewNoteIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(viewNoteIntent);
-
             }
         });
 
@@ -201,7 +189,6 @@ public class ListActivity extends AppCompatActivity {
 
                 }
             });
-
             return view;
         }
     }
@@ -217,15 +204,14 @@ public class ListActivity extends AppCompatActivity {
 
         if(item.getItemId()==R.id.add){
             Intent intent = new Intent(ListActivity.this,CreateNote.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
-
             return true;
         }
         else if(item.getItemId()==R.id.filter){
             mDrawerLayout.openDrawer(Gravity.RIGHT);
             return true;
         }
-
         return true;
     }
 }

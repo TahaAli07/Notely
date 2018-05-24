@@ -42,10 +42,6 @@ public class CreateNote extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.undo){
-
-            return true;
-        }
 
         if(item.getItemId()==R.id.save){
 
@@ -62,6 +58,7 @@ public class CreateNote extends AppCompatActivity {
 
                 Intent intent = new Intent(CreateNote.this,ListActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             return true;

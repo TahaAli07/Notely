@@ -8,10 +8,4 @@
 
         />
 
-    <item android:id="@+id/undo"
-        android:title="UNDO"
-        app:showAsAction="always"
-
-        />
-
 </menu>

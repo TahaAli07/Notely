@@ -14,16 +14,18 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:text="Heading of Note"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/Description_txtview"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/time_txtview"
         android:layout_alignStart="@+id/HeadingNote_txtview"
         android:layout_marginBottom="-87dp"
-        android:text="Note Descripton" />
+        android:text="Note Descripton"
+        android:maxLines="1" />
 
     <TextView
         android:id="@+id/time_txtview"
