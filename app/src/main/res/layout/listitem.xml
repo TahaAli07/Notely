@@ -20,9 +20,9 @@
         android:id="@+id/Description_txtview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/time_txtview"
         android:layout_alignStart="@+id/HeadingNote_txtview"
-        android:layout_marginTop="57dp"
+        android:layout_marginBottom="-87dp"
         android:text="Note Descripton" />
 
     <TextView
@@ -31,28 +31,31 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/HeadingNote_txtview"
-        android:layout_marginTop="83dp"
-        android:text="Today at 6:30 pm" />
+        android:layout_marginTop="93dp"
+        android:text="Today at 6:30 pm"
+        android:paddingBottom="20dp"/>
 
-    <CheckBox
+    <com.like.LikeButton
         android:id="@+id/star"
-        android:layout_width="wrap_content"
-
-        android:layout_height="wrap_content"
+        android:layout_width="39dp"
+        android:layout_height="37dp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/HeadingNote_txtview"
         android:layout_gravity="center"
         android:layout_marginEnd="78dp"
-        android:background="@android:color/transparent"
-        android:button="@android:drawable/btn_star" />
+        android:button="@android:drawable/btn_star"
+        app:icon_size="25dp"
+        app:icon_type="Star" />
 
-    <CheckBox
-        android:id="@+id/checkBox4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.like.LikeButton
+        android:id="@+id/heart"
+        android:layout_width="39dp"
+        android:layout_height="37dp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/HeadingNote_txtview"
         android:layout_marginEnd="25dp"
-        android:button="@android:drawable/btn_star" />
+        android:button="@android:drawable/btn_star"
+        app:icon_size="25dp"
+        app:icon_type="heart" />
 
 </RelativeLayout>

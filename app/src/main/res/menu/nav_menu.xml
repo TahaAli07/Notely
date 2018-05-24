@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/Hearted"
+        android:title="Hearted"
+        app:actionLayout="@layout/widget_check"/>
+
+    <item android:id="@+id/Favourite"
+        android:title="Favourite"
+        app:actionLayout="@layout/widget_check_favourite"/>
+
+</menu>
