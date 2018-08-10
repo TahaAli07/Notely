@@ -22,20 +22,20 @@ public class CreateNote extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
 
-        mTitle= findViewById(R.id.createNote_Title_EditText);
-        mDescription=findViewById(R.id.createNote_Description_EditText);
+        mTitle = findViewById(R.id.createNote_Title_EditText);
+        mDescription = findViewById(R.id.createNote_Description_EditText);
 
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "" + "</font>"));
         getSupportActionBar().setElevation(0);
 
-        Helper helper= new Helper(this);
-        mDb=helper.getWritableDatabase();
+        Helper helper = new Helper(this);
+        mDb = helper.getWritableDatabase();
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menuforcreatenote,menu);
+        getMenuInflater().inflate(R.menu.menuforcreatenote, menu);
         menu.findItem(R.id.save).setTitle(Html.fromHtml("<font color=\"black\">" + "SAVE" + "</font>"));
         return true;
     }
@@ -43,20 +43,20 @@ public class CreateNote extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId()==R.id.save){
+        if (item.getItemId() == R.id.save) {
 
             String title = mTitle.getText().toString();
             String description = mDescription.getText().toString();
 
-            if(title.equals("") && description.equals("")){
-                addTodb(title,description);
+            if (title.equals("") && description.equals("")) {
+                addTodb(title, description);
 
                 mTitle.clearFocus();
                 mDescription.clearFocus();
                 mTitle.getText().clear();
                 mDescription.getText().clear();
 
-                Intent intent = new Intent(CreateNote.this,ListActivity.class);
+                Intent intent = new Intent(CreateNote.this, ListActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -64,16 +64,16 @@ public class CreateNote extends AppCompatActivity {
             return true;
         }
 
-        return  true;
+        return true;
     }
 
-    public void addTodb(String title, String description){
+    public void addTodb(String title, String description) {
 
         ContentValues cv = new ContentValues();
-        cv.put("TITLE",title);
-        cv.put("DESCRIPTION",description);
+        cv.put("TITLE", title);
+        cv.put("DESCRIPTION", description);
         cv.put("TIME", System.currentTimeMillis());
-        mDb.insert("NOTELY",null,cv);
+        mDb.insert("NOTELY", null, cv);
 
         Toast.makeText(this, "SAVED SUCCESSFULLY", Toast.LENGTH_SHORT).show();
 

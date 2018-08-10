@@ -21,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -28,17 +29,18 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.facebook.stetho.Stetho;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+
 import java.util.Date;
 
 //Main class that displays the list of notes
 public class ListActivity extends AppCompatActivity {
 
     private SwipeMenuListView mListView;
-    private  String[] headings;
-    private  String[] descriptions;
-    private  String[] times;
-    private  Integer[] stars;
-    private  Integer[] hearts;
+    private String[] headings;
+    private String[] descriptions;
+    private String[] times;
+    private Integer[] stars;
+    private Integer[] hearts;
 
     private SQLiteDatabase mDb;
     private DrawerLayout mDrawerLayout;
@@ -54,12 +56,12 @@ public class ListActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(Html.fromHtml("<font color=\"black\">" + "Notely" + "</font>"));
         getSupportActionBar().setElevation(0);
 
-        mListView= findViewById(R.id.listView);
-        mDrawerLayout=findViewById(R.id.drawer_layout);
+        mListView = findViewById(R.id.listView);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
 
         //creating instance of the helper class to get the database
-        Helper helper= new Helper(this);
-        mDb=helper.getWritableDatabase();
+        Helper helper = new Helper(this);
+        mDb = helper.getWritableDatabase();
 
         // <item android:id="@+id/switch" title="Switch" ... />
         NavigationView nav = findViewById(R.id.navigation_view);
@@ -69,109 +71,105 @@ public class ListActivity extends AppCompatActivity {
         final CompoundButton HeartView = (CompoundButton) MenuItemCompat.getActionView(HeartItem);
 
         HeartView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(FavView.isChecked()){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (FavView.isChecked()) {
                     HeartView.setChecked(false);
                 }
 
                 Cursor cursor;
                 //If both hearted and favourite are unchecked
-                if(!HeartView.isChecked() && !FavView.isChecked()) {
+                if (!HeartView.isChecked() && !FavView.isChecked()) {
                     cursor = mDb.rawQuery("SELECT * FROM NOTELY", null);
                 }
 
                 //If heart is checked
-                else if(HeartView.isChecked() && !FavView.isChecked()){
-                    cursor= mDb.rawQuery("SELECT * FROM NOTELY ORDER BY HEART DESC", null);
-                }
-
-                else if(!HeartView.isChecked()  && FavView.isChecked()){
-                    cursor= mDb.rawQuery("SELECT * FROM NOTELY ORDER BY STAR DESC", null);
-                }
-                else{
+                else if (HeartView.isChecked() && !FavView.isChecked()) {
+                    cursor = mDb.rawQuery("SELECT * FROM NOTELY ORDER BY HEART DESC", null);
+                } else if (!HeartView.isChecked() && FavView.isChecked()) {
+                    cursor = mDb.rawQuery("SELECT * FROM NOTELY ORDER BY STAR DESC", null);
+                } else {
                     cursor = mDb.rawQuery("SELECT * FROM NOTELY", null);
                 }
 
                 headings = new String[cursor.getCount()];
-                descriptions= new String[cursor.getCount()];
-                times= new String[cursor.getCount()];
-                stars= new Integer[cursor.getCount()];
-                hearts= new Integer[cursor.getCount()];
+                descriptions = new String[cursor.getCount()];
+                times = new String[cursor.getCount()];
+                stars = new Integer[cursor.getCount()];
+                hearts = new Integer[cursor.getCount()];
 
-                int i=0;
+                int i = 0;
 
-                while(cursor.moveToNext()){
+                while (cursor.moveToNext()) {
 
-                    headings[i]= cursor.getString(cursor.getColumnIndex("TITLE"));
-                    descriptions[i]= cursor.getString(cursor.getColumnIndex("DESCRIPTION"));
+                    headings[i] = cursor.getString(cursor.getColumnIndex("TITLE"));
+                    descriptions[i] = cursor.getString(cursor.getColumnIndex("DESCRIPTION"));
 
                     long time = cursor.getLong(cursor.getColumnIndex("TIME"));
                     Date date = new Date(time);
-                    times[i]= date.toString().substring(0,16);
+                    times[i] = date.toString().substring(0, 16);
 
-                    stars[i]=cursor.getInt(cursor.getColumnIndex("STAR"));
-                    hearts[i]=cursor.getInt(cursor.getColumnIndex("HEART"));
+                    stars[i] = cursor.getInt(cursor.getColumnIndex("STAR"));
+                    hearts[i] = cursor.getInt(cursor.getColumnIndex("HEART"));
 
                     i++;
                 }
 
                 cursor.close();
 
-                customAdapter customAdapter= new customAdapter();
+                customAdapter customAdapter = new customAdapter();
                 mListView.setAdapter(customAdapter);
             }
         });
 
         FavView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(HeartView.isChecked()){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (HeartView.isChecked()) {
                     FavView.setChecked(false);
                 }
 
                 Cursor cursor;
                 //If both hearted and favourite are unchecked
-                if(!HeartView.isChecked() && !FavView.isChecked()) {
+                if (!HeartView.isChecked() && !FavView.isChecked()) {
                     cursor = mDb.rawQuery("SELECT * FROM NOTELY", null);
                 }
 
                 //If heart is checked
-                else if(HeartView.isChecked() && !FavView.isChecked()){
-                    cursor= mDb.rawQuery("SELECT * FROM NOTELY ORDER BY HEART DESC", null);
-                }
-
-                else if(!HeartView.isChecked()  && FavView.isChecked()){
-                    cursor= mDb.rawQuery("SELECT * FROM NOTELY ORDER BY STAR DESC", null);
-                }
-                else{
+                else if (HeartView.isChecked() && !FavView.isChecked()) {
+                    cursor = mDb.rawQuery("SELECT * FROM NOTELY ORDER BY HEART DESC", null);
+                } else if (!HeartView.isChecked() && FavView.isChecked()) {
+                    cursor = mDb.rawQuery("SELECT * FROM NOTELY ORDER BY STAR DESC", null);
+                } else {
                     cursor = mDb.rawQuery("SELECT * FROM NOTELY", null);
                 }
 
                 headings = new String[cursor.getCount()];
-                descriptions= new String[cursor.getCount()];
-                times= new String[cursor.getCount()];
-                stars= new Integer[cursor.getCount()];
-                hearts= new Integer[cursor.getCount()];
+                descriptions = new String[cursor.getCount()];
+                times = new String[cursor.getCount()];
+                stars = new Integer[cursor.getCount()];
+                hearts = new Integer[cursor.getCount()];
 
-                int i=0;
+                int i = 0;
 
-                while(cursor.moveToNext()){
+                while (cursor.moveToNext()) {
 
-                    headings[i]= cursor.getString(cursor.getColumnIndex("TITLE"));
-                    descriptions[i]= cursor.getString(cursor.getColumnIndex("DESCRIPTION"));
+                    headings[i] = cursor.getString(cursor.getColumnIndex("TITLE"));
+                    descriptions[i] = cursor.getString(cursor.getColumnIndex("DESCRIPTION"));
 
                     long time = cursor.getLong(cursor.getColumnIndex("TIME"));
                     Date date = new Date(time);
-                    times[i]= date.toString().substring(0,16);
+                    times[i] = date.toString().substring(0, 16);
 
-                    stars[i]=cursor.getInt(cursor.getColumnIndex("STAR"));
-                    hearts[i]=cursor.getInt(cursor.getColumnIndex("HEART"));
+                    stars[i] = cursor.getInt(cursor.getColumnIndex("STAR"));
+                    hearts[i] = cursor.getInt(cursor.getColumnIndex("HEART"));
 
                     i++;
                 }
 
                 cursor.close();
 
-                customAdapter customAdapter= new customAdapter();
+                customAdapter customAdapter = new customAdapter();
                 mListView.setAdapter(customAdapter);
             }
         });
@@ -179,45 +177,43 @@ public class ListActivity extends AppCompatActivity {
 
         Cursor cursor;
         //If both hearted and favourite are unchecked
-        if(!HeartView.isChecked() && !FavView.isChecked()) {
+        if (!HeartView.isChecked() && !FavView.isChecked()) {
             cursor = mDb.rawQuery("SELECT * FROM NOTELY", null);
         }
 
         //If heart is checked
-        else if(HeartView.isChecked()){
-            cursor= mDb.rawQuery("SELECT * FROM NOTELY ORDER BY HEART DESC", null);
-        }
-
-        else {
-            cursor= mDb.rawQuery("SELECT * FROM NOTELY ORDER BY STAR DESC", null);
+        else if (HeartView.isChecked()) {
+            cursor = mDb.rawQuery("SELECT * FROM NOTELY ORDER BY HEART DESC", null);
+        } else {
+            cursor = mDb.rawQuery("SELECT * FROM NOTELY ORDER BY STAR DESC", null);
         }
 
         headings = new String[cursor.getCount()];
-        descriptions= new String[cursor.getCount()];
-        times= new String[cursor.getCount()];
-        stars= new Integer[cursor.getCount()];
-        hearts= new Integer[cursor.getCount()];
+        descriptions = new String[cursor.getCount()];
+        times = new String[cursor.getCount()];
+        stars = new Integer[cursor.getCount()];
+        hearts = new Integer[cursor.getCount()];
 
-        int i=0;
+        int i = 0;
 
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
 
-            headings[i]= cursor.getString(cursor.getColumnIndex("TITLE"));
-            descriptions[i]= cursor.getString(cursor.getColumnIndex("DESCRIPTION"));
+            headings[i] = cursor.getString(cursor.getColumnIndex("TITLE"));
+            descriptions[i] = cursor.getString(cursor.getColumnIndex("DESCRIPTION"));
 
             long time = cursor.getLong(cursor.getColumnIndex("TIME"));
             Date date = new Date(time);
-            times[i]= date.toString().substring(0,16);
+            times[i] = date.toString().substring(0, 16);
 
-            stars[i]=cursor.getInt(cursor.getColumnIndex("STAR"));
-            hearts[i]=cursor.getInt(cursor.getColumnIndex("HEART"));
+            stars[i] = cursor.getInt(cursor.getColumnIndex("STAR"));
+            hearts[i] = cursor.getInt(cursor.getColumnIndex("HEART"));
 
             i++;
         }
 
         cursor.close();
 
-        customAdapter customAdapter= new customAdapter();
+        customAdapter customAdapter = new customAdapter();
         mListView.setAdapter(customAdapter);
 
         //OnclickListener for the List View
@@ -232,7 +228,7 @@ public class ListActivity extends AppCompatActivity {
                 String desc = description.getText().toString();
 
                 Cursor cursor1 = mDb.rawQuery("SELECT ID FROM NOTELY WHERE TITLE=? AND DESCRIPTION = ? ", new String[]{title, desc});
-                Integer ID=0;
+                Integer ID = 0;
 
                 if (cursor1.moveToNext()) {
 
@@ -240,8 +236,8 @@ public class ListActivity extends AppCompatActivity {
                 }
 
                 cursor1.close();
-                Intent viewNoteIntent = new Intent(ListActivity.this,ViewNote.class);
-                viewNoteIntent.putExtra("ID",ID);
+                Intent viewNoteIntent = new Intent(ListActivity.this, ViewNote.class);
+                viewNoteIntent.putExtra("ID", ID);
                 viewNoteIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(viewNoteIntent);
             }
@@ -284,7 +280,7 @@ public class ListActivity extends AppCompatActivity {
     }
 
     //This is the custom adapter for the list view
-    class customAdapter extends BaseAdapter{
+    class customAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -304,10 +300,10 @@ public class ListActivity extends AppCompatActivity {
         @Override
         public View getView(final int position, View view, ViewGroup parent) {
 
-            view = getLayoutInflater().inflate(R.layout.listitem,null);
+            view = getLayoutInflater().inflate(R.layout.listitem, null);
 
-            TextView heading= view.findViewById(R.id.HeadingNote_txtview);
-            TextView description= view.findViewById(R.id.Description_txtview);
+            TextView heading = view.findViewById(R.id.HeadingNote_txtview);
+            TextView description = view.findViewById(R.id.Description_txtview);
             TextView time = view.findViewById(R.id.time_txtview);
             LikeButton star = view.findViewById(R.id.star);
             LikeButton heart = view.findViewById(R.id.heart);
@@ -319,18 +315,16 @@ public class ListActivity extends AppCompatActivity {
             Boolean starBoolean;
             Boolean heartBoolean;
 
-            if(stars[position]==0){
+            if (stars[position] == 0) {
                 starBoolean = false;
-            }
-            else{
-                starBoolean=true;
+            } else {
+                starBoolean = true;
             }
 
-            if(hearts[position]==0){
+            if (hearts[position] == 0) {
                 heartBoolean = false;
-            }
-            else{
-                heartBoolean=true;
+            } else {
+                heartBoolean = true;
             }
 
             star.setLiked(starBoolean);
@@ -341,13 +335,13 @@ public class ListActivity extends AppCompatActivity {
                 @Override
                 public void liked(LikeButton likeButton) {
 
-                    mDb.execSQL("UPDATE NOTELY SET STAR = 1 " + "WHERE TITLE = '" + headings[position]+"'");
+                    mDb.execSQL("UPDATE NOTELY SET STAR = 1 " + "WHERE TITLE = '" + headings[position] + "'");
                 }
 
                 @Override
                 public void unLiked(LikeButton likeButton) {
 
-                    mDb.execSQL("UPDATE NOTELY SET STAR = 0 " + "WHERE TITLE = '" + headings[position]+"'");
+                    mDb.execSQL("UPDATE NOTELY SET STAR = 0 " + "WHERE TITLE = '" + headings[position] + "'");
                 }
             });
 
@@ -356,12 +350,12 @@ public class ListActivity extends AppCompatActivity {
                 @Override
                 public void liked(LikeButton likeButton) {
 
-                    mDb.execSQL("UPDATE NOTELY SET HEART = 1 " + "WHERE TITLE = '" + headings[position]+"'");
+                    mDb.execSQL("UPDATE NOTELY SET HEART = 1 " + "WHERE TITLE = '" + headings[position] + "'");
                 }
 
                 @Override
                 public void unLiked(LikeButton likeButton) {
-                    mDb.execSQL("UPDATE NOTELY SET HEART = 0 " + "WHERE TITLE = '" + headings[position] +"'");
+                    mDb.execSQL("UPDATE NOTELY SET HEART = 0 " + "WHERE TITLE = '" + headings[position] + "'");
 
                 }
             });
@@ -372,20 +366,19 @@ public class ListActivity extends AppCompatActivity {
     //These two methods are used to inflate and initialise the menu xml the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId()==R.id.add){
-            Intent intent = new Intent(ListActivity.this,CreateNote.class);
+        if (item.getItemId() == R.id.add) {
+            Intent intent = new Intent(ListActivity.this, CreateNote.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
             return true;
-        }
-        else if(item.getItemId()==R.id.filter){
+        } else if (item.getItemId() == R.id.filter) {
             mDrawerLayout.openDrawer(Gravity.RIGHT);
             return true;
         }
